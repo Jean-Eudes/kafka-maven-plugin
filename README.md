@@ -2,6 +2,7 @@
 
 ### Usage - start kafka and create topics
 
+```xml
 <build>
     <plugins>
       <plugin>
@@ -52,3 +53,4 @@
       </plugin>
     </plugins>
   </build>
+  ```
