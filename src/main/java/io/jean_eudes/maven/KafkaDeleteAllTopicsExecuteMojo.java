@@ -1,7 +1,7 @@
 package io.jean_eudes.maven;
 
 import static org.apache.maven.plugins.annotations.LifecyclePhase.POST_INTEGRATION_TEST;
-import java.util.Properties;
+
 import java.util.concurrent.TimeUnit;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -11,17 +11,16 @@ import org.apache.maven.plugins.annotations.Parameter;
 import kafka.admin.AdminUtils;
 import kafka.utils.ZkUtils;
 import scala.collection.*;
-import scala.collection.Iterable;
 
 @Mojo(name = "deleteAllTopics",
       defaultPhase = POST_INTEGRATION_TEST,
       threadSafe = true)
 public class KafkaDeleteAllTopicsExecuteMojo extends AbstractMojo {
 
-    @Parameter(property = "zookeeper.host", defaultValue = "localhost")
+    @Parameter(property = "zookeeperHost", defaultValue = "localhost")
     private String zookeeperHost;
 
-    @Parameter(property = "zookeeper.port", defaultValue = "2181")
+    @Parameter(property = "zookeeperPort", defaultValue = "2181")
     private int zookeeperPort;
 
     public final static String IGNORED_TOPIC = "__consumer_offsets";
