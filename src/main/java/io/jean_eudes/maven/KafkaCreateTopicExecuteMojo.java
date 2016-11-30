@@ -1,14 +1,15 @@
 package io.jean_eudes.maven;
 
-import static org.apache.maven.plugins.annotations.LifecyclePhase.PRE_INTEGRATION_TEST;
 import java.util.Properties;
+import kafka.admin.AdminUtils;
+import kafka.utils.ZkUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import kafka.admin.AdminUtils;
-import kafka.utils.ZkUtils;
+
+import static org.apache.maven.plugins.annotations.LifecyclePhase.PRE_INTEGRATION_TEST;
 
 @Mojo(name = "createTopic",
       defaultPhase = PRE_INTEGRATION_TEST,
@@ -30,7 +31,14 @@ public class KafkaCreateTopicExecuteMojo extends AbstractMojo {
     @Parameter(property = "replicationFactor", defaultValue = "1")
     private int replicationFactor;
 
+    @Parameter(property = "kafka.skip", defaultValue = "false")
+    private boolean skip;
+
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if(skip) {
+            getLog().info("Skips creating topic : " + topic);
+            return;
+        }
 
         getLog().info("creating topic: " + topic);
 
